@@ -1,4 +1,4 @@
-POV_Globe_File_Gen
+POV Globe File Gen
 ==================
 
 Data file generator for POV globe
