@@ -1,28 +1,34 @@
-import java.io.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 
 public class File_Gen {
-	
 	public static void main(String[] args) throws IOException{
-		Scanner input = new Scanner(new File("raw_led_data.txt"));
-
-        FileOutputStream out = new FileOutputStream("LED.dat");
-        int temp, i;
-        
-        temp = (int)input.nextLong();
+		int i, j;
+		
+		FileOutputStream out = new FileOutputStream("LED.dat");
+		BufferedImage img=ImageIO.read(new File("led_data.bmp"));
+		
+		int size = (img.getWidth() * img.getHeight());
+		
         for(i = 3; i>=0;i--){
-        	out.write((temp>>(i*8)) & 0xFF);
+        	out.write((size>>(i*8)) & 0xFF);
         }
-        
-        while(input.hasNextInt()){
-        	
-        	temp = input.nextInt();
-        	out.write(temp);
-        }
-        
-        out.close();
-
+		
+		for(i = 0; i< img.getWidth();i++){
+			for(j = img.getHeight()-1;j>=0;j--){
+				Color c = new Color(img.getRGB(i, j));
+				out.write(c.getRed());
+				out.write(c.getGreen());
+				out.write(c.getBlue());
+			}
+		}
+		
+		out.close();
 
 	}
 }
